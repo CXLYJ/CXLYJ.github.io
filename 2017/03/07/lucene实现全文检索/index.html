@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaweb笔记 -搜索功能实现,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Lucene和搜索引擎不是一回事 Lucene是一个工具包，它不能独立运行，不能单独对外提供服务。搜索引擎可以独立运行对外提供搜索服务。">
+<meta name="keywords" content="javaweb笔记 -搜索功能实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lucene实现全文检索 ">
+<meta property="og:url" content="http://yoursite.com/2017/03/07/lucene实现全文检索/index.html">
+<meta property="og:site_name" content="LYJ博客">
+<meta property="og:description" content="Lucene和搜索引擎不是一回事 Lucene是一个工具包，它不能独立运行，不能单独对外提供服务。搜索引擎可以独立运行对外提供搜索服务。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-03-09T04:33:50.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lucene实现全文检索 ">
+<meta name="twitter:description" content="Lucene和搜索引擎不是一回事 Lucene是一个工具包，它不能独立运行，不能单独对外提供服务。搜索引擎可以独立运行对外提供搜索服务。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/07/lucene实现全文检索/">
+
+
+
+
+
+  <title>lucene实现全文检索  | LYJ博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LYJ博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个人的故事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/07/lucene实现全文检索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LYJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYJ博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">lucene实现全文检索 </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-07T23:30:55+08:00">
+                2017-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Lucene和搜索引擎不是一回事</p>
+<p>Lucene是一个工具包，它不能独立运行，不能单独对外提供服务。<br>搜索引擎可以独立运行对外提供搜索服务。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="1-0-全文检索的定义"><a href="#1-0-全文检索的定义" class="headerlink" title="1.0 全文检索的定义"></a>1.0 全文检索的定义</h2><p>全文检索首先对要搜索的文档进行分词，然后形成索引，通过查询索引来查询文档。</p>
+<p>全文检索就是先创建索引，然后根据索引来进行搜索的过程，就叫全文检索。</p>
+<p>比如：字典，<br>        字典的偏旁部首页，就类似于luence的索引<br>        字典的具体内容，就类似于luence的文档内容</p>
+<h2 id="1-1-环境准备"><a href="#1-1-环境准备" class="headerlink" title="1.1 环境准备"></a>1.1 环境准备</h2><ul>
+<li>Jdk：1.7及以上</li>
+<li>Lucene：4.10（从4.8版本以后，必须使用jdk1.7及以上）</li>
+<li>Ide：indigo</li>
+<li>数据库：mysql 5</li>
+</ul>
+<h2 id="1-2-Lucene下载"><a href="#1-2-Lucene下载" class="headerlink" title="1.2 Lucene下载"></a>1.2 Lucene下载</h2><p>Lucene是开发全文检索功能的工具包，使用时从官方网站下载，并解压。</p>
+<p>官方网站：<a href="http://lucene.apache.org/" target="_blank" rel="noopener">http://lucene.apache.org/</a></p>
+<p>目前最新版本：5.4.0</p>
+<p>下载地址：<a href="http://archive.apache.org/dist/lucene/java/" target="_blank" rel="noopener">http://archive.apache.org/dist/lucene/java/</a></p>
+<p>下载版本：4.10.3</p>
+<p>JDK要求：1.7以上（从版本4.8开始，不支持1.7以下）</p>
+<h2 id="1-3-工程搭建"><a href="#1-3-工程搭建" class="headerlink" title="1.3 工程搭建"></a>1.3 工程搭建</h2><ul>
+<li>Mysql驱动包</li>
+<li>Analysis的包</li>
+<li>Core包</li>
+<li>QueryParser包</li>
+<li>Junit包（非必须）</li>
+</ul>
+<h2 id="1-4-索引流程"><a href="#1-4-索引流程" class="headerlink" title="1.4 索引流程"></a>1.4 索引流程</h2><h3 id="为什么采集数据"><a href="#为什么采集数据" class="headerlink" title="为什么采集数据"></a>为什么采集数据</h3><p>全文检索搜索的内容的格式是多种多样的，比如：视频、mp3、图片、文档等等。<br>对于这种格式不同的数据，需要先将他们采集到本地，然后统一封装到lucene的文档对象中，<br>也就是说需要将存储的内容进行统一才能对它进行查询。</p>
+<h3 id="采集数据的方式"><a href="#采集数据的方式" class="headerlink" title="采集数据的方式"></a>采集数据的方式</h3><ul>
+<li>对于互联网中的数据，使用爬虫工具（http工具）将网页爬取到本地</li>
+<li><font color="red">对于数据库中的数据，使用jdbc程序进行数据采集</font></li>
+<li>对于文件系统的数据，使用io流采集</li>
+</ul>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="1-5-采集数据"><a href="#1-5-采集数据" class="headerlink" title="1.5 采集数据"></a>1.5 采集数据</h2><p>&gt;</p>
+<pre><code>public class BookDaoImpl implements BookDao {
+
+    @Override
+    public List&lt;Book&gt; queryBooks() {
+        // 数据库链接
+        Connection connection = null;
+
+        // 预编译statement
+        PreparedStatement preparedStatement = null;
+
+        // 结果集
+        ResultSet resultSet = null;
+
+        // 图书列表
+        List&lt;Book&gt; list = new ArrayList&lt;Book&gt;();
+
+        try {
+            // 加载数据库驱动
+            Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+            // 连接数据库
+            connection = DriverManager.getConnection(
+                    &quot;jdbc:mysql://localhost:3306/solr&quot;, &quot;root&quot;, &quot;root&quot;);
+
+            // SQL语句
+            String sql = &quot;SELECT * FROM book&quot;;
+            // 创建preparedStatement
+            preparedStatement = connection.prepareStatement(sql);
+
+            // 获取结果集
+            resultSet = preparedStatement.executeQuery();
+
+            // 结果集解析
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setId(resultSet.getInt(&quot;id&quot;));
+                book.setName(resultSet.getString(&quot;name&quot;));
+                book.setPrice(resultSet.getFloat(&quot;price&quot;));
+                book.setPic(resultSet.getString(&quot;pic&quot;));
+                book.setDescription(resultSet.getString(&quot;description&quot;));
+                list.add(book);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+}
+</code></pre><p>&gt;</p>
+<h2 id="1-6-创建索引"><a href="#1-6-创建索引" class="headerlink" title="1.6 创建索引"></a>1.6 创建索引</h2><p><em><b>IndexWriter</b>是索引过程的核心组件，通过IndexWriter可以<b>创建新索引、更新索引、删除索引</b>操作。<br>IndexWriter需要通过<b>Directory</b>对索引进行存储操作。<br>Directory描述了索引的存储位置，<u>底层封装了I/O操作，负责对索引进行存储</u>。<br>它是一个抽象类，它的子类常用的包括<b>FSDirectory</b>（在文件系统存储索引）、<b>RAMDirectory</b>（在内存存储索引）</em>。</p>
+<pre><code>@Test
+    public void createIndex() throws Exception {
+        // 采集数据
+        BookDao dao = new BookDaoImpl();
+        List&lt;Book&gt; list = dao.queryBooks();
+
+        // 将采集到的数据封装到Document对象中
+        List&lt;Document&gt; docList = new ArrayList&lt;&gt;();
+        Document document;
+        for (Book book : list) {
+            document = new Document();
+            // store:如果是yes，则说明存储到文档域中
+            // 图书ID
+            Field id = new TextField(&quot;id&quot;, book.getId().toString(), Store.YES);
+            // 图书名称
+            Field name = new TextField(&quot;name&quot;, book.getName(), Store.YES);
+            // 图书价格
+            Field price = new TextField(&quot;price&quot;, book.getPrice().toString(),
+                    Store.YES);
+            // 图书图片地址
+            Field pic = new TextField(&quot;pic&quot;, book.getPic(), Store.YES);
+            // 图书描述
+            Field description = new TextField(&quot;description&quot;,
+                    book.getDescription(), Store.YES);
+
+            // 将field域设置到Document对象中
+            document.add(id);
+            document.add(name);
+            document.add(price);
+            document.add(pic);
+            document.add(description);
+
+            docList.add(document);
+        }
+
+        // 创建分词器，标准分词器
+        Analyzer analyzer = new StandardAnalyzer();
+
+        // 创建IndexWriter
+        IndexWriterConfig cfg = new IndexWriterConfig(Version.LUCENE_4_10_3,
+                analyzer);
+        // 指定索引库的地址
+        File indexFile = new File(&quot;E:\\11-index\\hm19\\&quot;);
+        Directory directory = FSDirectory.open(indexFile);
+        IndexWriter writer = new IndexWriter(directory, cfg);
+
+        // 通过IndexWriter对象将Document写入到索引库中
+        for (Document doc : docList) {
+            writer.addDocument(doc);
+        }
+
+        // 关闭writer
+        writer.close();
+    }
+</code></pre><h2 id="1-6-分词"><a href="#1-6-分词" class="headerlink" title="1.6 分词"></a>1.6 分词</h2><p>Lucene中分词主要分为两个步骤：分词、过滤</p>
+<ul>
+<li>分词：将field域中的内容一个个的分词。</li>
+<li><p>过滤：将分好的词进行过滤，比如去掉标点符号、大写转小写、词的型还原（复数转单数、过去式转成现在式）、停用词过滤</p>
+</li>
+<li><p>停用词：单独应用没有特殊意义的词。比如的、啊、等，英文中的this is a the等等。</p>
+<blockquote>
+<p>要分词的内容</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>Lucene is a Java full-text search engine. </p>
+</blockquote>
+<ul>
+<li>分词</li>
+<li><p>  Lucene </p>
+<p>  is </p>
+<p>  a </p>
+<p>  Java </p>
+<p>  Full</p>
+<p>  -</p>
+<p>  text </p>
+<p>  search </p>
+<p>  engine<br>  .</p>
+</li>
+<li><p>过滤</p>
+</li>
+<li><p>去掉标点符号</p>
+</li>
+<li><p>  Lucene </p>
+<p>  is </p>
+<p>  a </p>
+<p>  Java </p>
+<p>  Full</p>
+<p>  text </p>
+<p>  search </p>
+<p>  engine</p>
+</li>
+<li><p>去掉停用词<br>-<br>  Lucene </p>
+<p>  Java </p>
+<p>  Full</p>
+<p>  text </p>
+<p>  search </p>
+<p>  engine</p>
+</li>
+<li><p>大写转小写<br>-<br>  lucene </p>
+<p>  java </p>
+<p>  full</p>
+<p>  text </p>
+<p>  search </p>
+<p>  engine</p>
+</li>
+</ul>
+<ul>
+<li><p>如下是org.apache.lucene.analysis.standard.standardAnalyzer的部分源码：</p>
+<pre><code>@Override
+protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+  final StandardTokenizer src = new StandardTokenizer(getVersion(), reader);
+  src.setMaxTokenLength(maxTokenLength);
+  TokenStream tok = new StandardFilter(getVersion(), src);
+  tok = new LowerCaseFilter(getVersion(), tok);
+  tok = new StopFilter(getVersion(), tok, stopwords);
+  return new TokenStreamComponents(src, tok) {
+    @Override
+    protected void setReader(final Reader reader) throws IOException {
+      src.setMaxTokenLength(StandardAnalyzer.this.maxTokenLength);
+      super.setReader(reader);
+    }
+  };
+}
+</code></pre></li>
+</ul>
+<p>从一个Reader字符流开始，创建一个基于Reader的Tokenizer分词器，经过三个TokenFilter生成语汇单元Token。</p>
+<font color="red">同一个域中相同的语汇单元（Token）对应同一个Term（词），它记录了语汇单元的内容及所在域的域名等，还包括来该token出现的频率及位置。</font>
+
+<ul>
+<li><font color="red">不同的域中拆分出来的相同的单词对应不同的term。</font></li>
+<li>相同的域中拆分出来的相同的单词对应相同的term。</li>
+</ul>
+<p>例如：图书信息里面，图书名称中的java和图书描述中的java对应不同的term</p>
+<h2 id="1-7-搜索流程"><a href="#1-7-搜索流程" class="headerlink" title="1.7 搜索流程"></a>1.7 搜索流程</h2><blockquote>
+<p>同数据库的sql一样，lucene全文检索也有固定的语法：<br>最基本的有比如：AND, OR, NOT 等</p>
+<p>举个例子，用户想找一个description中包括java关键字和lucene关键字的文档。<br>它对应的查询语句：<font color="red">description:java AND lucene</font></p>
+</blockquote>
+<ul>
+<li><p>代码</p>
+<pre><code>@Test
+public void indexSearch() throws Exception {
+    // 创建query对象
+    // 使用QueryParser搜索时，需要指定分词器，搜索时的分词器要和索引时的分词器一致
+    // 第一个参数：默认搜索的域的名称
+    QueryParser parser = new QueryParser(&quot;description&quot;,
+            new StandardAnalyzer());
+
+    // 通过queryparser来创建query对象
+    // 参数：输入的lucene的查询语句(关键字一定要大写)
+    Query query = parser.parse(&quot;description:java AND lucene&quot;);
+
+    // 创建IndexSearcher
+    // 指定索引库的地址
+    File indexFile = new File(&quot;E:\\11-index\\hm19\\&quot;);
+    Directory directory = FSDirectory.open(indexFile);
+    IndexReader reader = DirectoryReader.open(directory);
+    IndexSearcher searcher = new IndexSearcher(reader);
+
+    // 通过searcher来搜索索引库
+    // 第二个参数：指定需要显示的顶部记录的N条
+    TopDocs topDocs = searcher.search(query, 10);
+
+    // 根据查询条件匹配出的记录总数
+    int count = topDocs.totalHits;
+    System.out.println(&quot;匹配出的记录总数:&quot; + count);
+    // 根据查询条件匹配出的记录
+    ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+
+    for (ScoreDoc scoreDoc : scoreDocs) {
+        // 获取文档的ID
+        int docId = scoreDoc.doc;
+
+        // 通过ID获取文档
+        Document doc = searcher.doc(docId);
+        System.out.println(&quot;商品ID：&quot; + doc.get(&quot;id&quot;));
+        System.out.println(&quot;商品名称：&quot; + doc.get(&quot;name&quot;));
+        System.out.println(&quot;商品价格：&quot; + doc.get(&quot;price&quot;));
+        System.out.println(&quot;商品图片地址：&quot; + doc.get(&quot;pic&quot;));
+        System.out.println(&quot;==========================&quot;);
+        // System.out.println(&quot;商品描述：&quot; + doc.get(&quot;description&quot;));
+    }
+    // 关闭资源
+    reader.close();
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaweb笔记-搜索功能实现/" rel="tag"># javaweb笔记 -搜索功能实现</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/07/hexo-多说设置/" rel="next" title="hexo 多说设置 ">
+                <i class="fa fa-chevron-left"></i> hexo 多说设置 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/Activity4种启动模式/" rel="prev" title="Activity4种启动模式 ">
+                Activity4种启动模式  <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LYJ</p>
+              <p class="site-description motion-element" itemprop="description">一个人的故事</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-0-全文检索的定义"><span class="nav-number">1.</span> <span class="nav-text">1.0 全文检索的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-环境准备"><span class="nav-number">2.</span> <span class="nav-text">1.1 环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Lucene下载"><span class="nav-number">3.</span> <span class="nav-text">1.2 Lucene下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-工程搭建"><span class="nav-number">4.</span> <span class="nav-text">1.3 工程搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-索引流程"><span class="nav-number">5.</span> <span class="nav-text">1.4 索引流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么采集数据"><span class="nav-number">5.1.</span> <span class="nav-text">为什么采集数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#采集数据的方式"><span class="nav-number">5.2.</span> <span class="nav-text">采集数据的方式</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number"></span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-采集数据"><span class="nav-number">1.</span> <span class="nav-text">1.5 采集数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-创建索引"><span class="nav-number">2.</span> <span class="nav-text">1.6 创建索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-分词"><span class="nav-number">3.</span> <span class="nav-text">1.6 分词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-搜索流程"><span class="nav-number">4.</span> <span class="nav-text">1.7 搜索流程</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LYJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

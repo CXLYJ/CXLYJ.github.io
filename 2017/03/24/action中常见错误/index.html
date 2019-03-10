@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-SSH整合 -action遇到的错误,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在SSH整合的过程中经常遇到空指针的解决方案">
+<meta name="keywords" content="-SSH整合 -action遇到的错误">
+<meta property="og:type" content="article">
+<meta property="og:title" content="action中常见错误">
+<meta property="og:url" content="http://yoursite.com/2017/03/24/action中常见错误/index.html">
+<meta property="og:site_name" content="LYJ博客">
+<meta property="og:description" content="在SSH整合的过程中经常遇到空指针的解决方案">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-03-30T15:01:57.209Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="action中常见错误">
+<meta name="twitter:description" content="在SSH整合的过程中经常遇到空指针的解决方案">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/24/action中常见错误/">
+
+
+
+
+
+  <title>action中常见错误 | LYJ博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LYJ博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个人的故事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/24/action中常见错误/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LYJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYJ博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">action中常见错误</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-24T13:23:58+08:00">
+                2017-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="在SSH整合的过程中经常遇到空指针的解决方案"><a href="#在SSH整合的过程中经常遇到空指针的解决方案" class="headerlink" title="在SSH整合的过程中经常遇到空指针的解决方案"></a>在SSH整合的过程中经常遇到空指针的解决方案</h3><a id="more"></a>
+<blockquote>
+<p>先说点废话又隔了一天没有写笔记了前天还说的一天写篇笔记的真该打脸</p>
+<p>但昨弄了一天的SSH整合一时忘掉了，这不今天带着我遇到的问题来见大家了，希望对你们有所帮助</p>
+</blockquote>
+<h2 id="困扰了我一天的bug"><a href="#困扰了我一天的bug" class="headerlink" title="困扰了我一天的bug"></a>困扰了我一天的bug</h2><ul>
+<li><p>HTTP Status 500 </p>
+</li>
+<li><p>description The server encountered an internal error that prevented it from fulfilling this request.</p>
+</li>
+</ul>
+<blockquote>
+<p>在这里出现了错误一般是我们的Srping整合struts2是我们的属性名没有一致</p>
+<p>也就是spring中bean的id没有对应Action中service实现类set方法的的属性名</p>
+</blockquote>
+<ul>
+<li><p>这里我把代码贴一下</p>
+</li>
+<li><p>spring中的配置</p>
+<pre><code>&lt;!--配置Action的项--&gt;
+&lt;bean id=&quot;productAction&quot; class=&quot;com.java.action.ProductAction&quot; scope=&quot;prototype&quot;&gt;
+    &lt;property name=&quot;productService&quot; ref=&quot;productService&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+</code></pre></li>
+<li><p>Action中的写法</p>
+<pre><code>import com.java.domain.Product;
+import com.java.service.ProductService;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+public class ProductAction extends ActionSupport implements ModelDriven&lt;Product&gt;{
+    private static final long serialVersionUID = 1L;
+
+    //模型驱动使用的项
+    private Product product=new Product();
+    //struts2和spring整合中按名称自动注入的项
+    private ProductService productService;
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    //getModel方法自动将提交的数据给product属性赋值前台不需要使用（对象.属性）的
+    @Override
+    public Product getModel() {
+        // TODO Auto-generated method stub
+        return product;
+    }
+
+    public String save(){
+        System.out.println(&quot;Action中的save方法执行了...&quot;);
+        productService.save(product);
+        return SUCCESS;
+    }
+}
+</code></pre></li>
+<li><p>struts2的配置</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE struts PUBLIC
+    &quot;-//Apache Software Foundation//DTD Struts Configuration 2.3//EN&quot;
+    &quot;http://struts.apache.org/dtds/struts-2.3.dtd&quot;&gt;
+&lt;struts&gt;
+  &lt;package name=&quot;S2SH&quot; extends=&quot;struts-default&quot; namespace=&quot;/&quot;&gt;
+      &lt;action name=&quot;product_*&quot; class=&quot;productAction&quot; method=&quot;{1}&quot;&gt;
+          &lt;result name=&quot;success&quot; type=&quot;redirect&quot;&gt;/success.jsp&lt;/result&gt;
+      &lt;/action&gt;
+  &lt;/package&gt;
+&lt;/struts&gt;
+</code></pre></li>
+</ul>
+<blockquote>
+<p>一定要注意private ProductService productService;这个类名要对应ref=”productService”这个注入名</p>
+</blockquote>
+<h2 id="当然struts2中还有一种写法"><a href="#当然struts2中还有一种写法" class="headerlink" title="当然struts2中还有一种写法"></a>当然struts2中还有一种写法</h2><blockquote>
+<p>这中写法就是把spring中<font color="red">action配置的项</font>删掉,在struts2中的class中直接引入</p>
+<p>action类所在的位置例如：class=”com.java.action.ProductAction”</p>
+</blockquote>
+<ul>
+<li><p>struts2的配置</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE struts PUBLIC
+    &quot;-//Apache Software Foundation//DTD Struts Configuration 2.3//EN&quot;
+    &quot;http://struts.apache.org/dtds/struts-2.3.dtd&quot;&gt;
+&lt;struts&gt;
+  &lt;package name=&quot;S2SH&quot; extends=&quot;struts-default&quot; namespace=&quot;/&quot;&gt;
+      &lt;action name=&quot;product_*&quot; class=&quot;com.java.action.ProductAction&quot; method=&quot;{1}&quot; &gt;
+           &lt;result name=&quot;success&quot; type=&quot;redirect&quot;&gt;/success.jsp&lt;/result&gt;
+      &lt;/action&gt; 
+  &lt;/package&gt;
+&lt;/struts&gt;
+</code></pre></li>
+</ul>
+<h3 id="所有的spring的配置"><a href="#所有的spring的配置" class="headerlink" title="所有的spring的配置"></a>所有的spring的配置</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;
+
+        &lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;
+        &lt;!-- 配置连接池 --&gt;
+        &lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
+            &lt;property name=&quot;driverClass&quot; value=&quot;${jdbc.driverClass}&quot;&gt;&lt;/property&gt;
+            &lt;property name=&quot;jdbcUrl&quot; value=&quot;${jdbc.url}&quot;&gt;&lt;/property&gt;
+            &lt;property name=&quot;user&quot; value=&quot;${jdbc.username}&quot;&gt;&lt;/property&gt;
+            &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+        &lt;!-- 配置hibernate --&gt;
+        &lt;bean id=&quot;sessionFactory&quot; class=&quot;org.springframework.orm.hibernate3.LocalSessionFactoryBean&quot;&gt;
+            &lt;!-- 注入连接池 --&gt;
+            &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+            &lt;!-- 配置属性 --&gt;
+            &lt;property name=&quot;hibernateProperties&quot;&gt;
+                &lt;props&gt;
+                    &lt;prop key=&quot;hibernate.dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/prop&gt;
+                    &lt;prop key=&quot;hibernate.show_sql&quot;&gt; true&lt;/prop&gt;
+                    &lt;prop key=&quot;hibernate.format_sql&quot;&gt;true&lt;/prop&gt;
+                    &lt;prop key=&quot;hibernate.hbm2ddl.auto&quot;&gt;update&lt;/prop&gt;
+                &lt;/props&gt;
+            &lt;/property&gt;
+            &lt;!-- 加载映射文件 --&gt;
+            &lt;property name=&quot;mappingLocations&quot; value=&quot;classpath:com/java/domain/*.hbm.xml&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+        &lt;!-- 配置业务层的项 --&gt;
+        &lt;bean id=&quot;productService&quot; class=&quot;com.java.service.impl.ProductServiceImpl&quot;&gt;
+            &lt;property name=&quot;productDao&quot; ref=&quot;productDao&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+        &lt;!-- 配置DAO的项 --&gt;
+        &lt;bean id=&quot;productDao&quot; class=&quot;com.java.dao.impl.ProductDaoImpl&quot;&gt;
+            &lt;property name=&quot;sessionFactory&quot; ref=&quot;sessionFactory&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+
+        &lt;!--  配置Action的项
+        &lt;bean id=&quot;productAction&quot; class=&quot;com.java.action.ProductAction&quot; scope=&quot;prototype&quot;&gt;
+            &lt;property name=&quot;productService&quot; ref=&quot;productService&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt; --&gt;
+
+        &lt;!-- 事务管理器 --&gt;
+        &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.orm.hibernate3.HibernateTransactionManager&quot;&gt;
+            &lt;property name=&quot;sessionFactory&quot; ref=&quot;sessionFactory&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+        &lt;!-- 开启事务 --&gt;
+        &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;
+&lt;/beans&gt;
+</code></pre><h3 id="web-xml的配置"><a href="#web-xml的配置" class="headerlink" title="web.xml的配置"></a>web.xml的配置</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+                xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; 
+                xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee 
+                http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; 
+                id=&quot;WebApp_ID&quot; version=&quot;3.0&quot;&gt;
+  &lt;display-name&gt;S2SH&lt;/display-name&gt;
+  &lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;addProduct.jsp&lt;/welcome-file&gt;
+  &lt;/welcome-file-list&gt;
+  &lt;!-- SPRING     监听器 --&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+    &lt;!-- struts2配置 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;struts2&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;struts2&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><h3 id="jsp代码"><a href="#jsp代码" class="headerlink" title="jsp代码"></a>jsp代码</h3><pre><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+ &lt;%@ taglib uri=&quot;/struts-tags&quot; prefix=&quot;s&quot; %&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;添加商品&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;保存商品的页面&lt;/h1&gt;
+&lt;s:form action=&quot;product_save&quot; method=&quot;post&quot; namespace=&quot;/&quot; theme=&quot;simple&quot;&gt;
+    &lt;table border=&quot;1&quot; width=&quot;400&quot;&gt;
+        &lt;tr&gt;
+            &lt;td&gt;商品名称&lt;/td&gt;
+            &lt;td&gt;&lt;s:textfield name=&quot;pname&quot;&gt;&lt;/s:textfield&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;商品价格&lt;/td&gt;
+            &lt;td&gt;&lt;s:textfield name=&quot;price&quot;&gt;&lt;/s:textfield&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td colspan=&quot;2&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;添加&quot;/&gt;&lt;/td&gt;
+
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/s:form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="最后有不懂得童鞋可以滴滴博主我"><a href="#最后有不懂得童鞋可以滴滴博主我" class="headerlink" title="最后有不懂得童鞋可以滴滴博主我"></a>最后有不懂得童鞋可以滴滴博主我</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SSH整合-action遇到的错误/" rel="tag"># -SSH整合 -action遇到的错误</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/Spring的学习/" rel="next" title="Spring的学习 ">
+                <i class="fa fa-chevron-left"></i> Spring的学习 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/25/struts2拦截器的使用/" rel="prev" title="struts2拦截器的使用">
+                struts2拦截器的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LYJ</p>
+              <p class="site-description motion-element" itemprop="description">一个人的故事</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在SSH整合的过程中经常遇到空指针的解决方案"><span class="nav-number">1.</span> <span class="nav-text">在SSH整合的过程中经常遇到空指针的解决方案</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#困扰了我一天的bug"><span class="nav-number"></span> <span class="nav-text">困扰了我一天的bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当然struts2中还有一种写法"><span class="nav-number"></span> <span class="nav-text">当然struts2中还有一种写法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#所有的spring的配置"><span class="nav-number">1.</span> <span class="nav-text">所有的spring的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml的配置"><span class="nav-number">2.</span> <span class="nav-text">web.xml的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsp代码"><span class="nav-number">3.</span> <span class="nav-text">jsp代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后有不懂得童鞋可以滴滴博主我"><span class="nav-number"></span> <span class="nav-text">最后有不懂得童鞋可以滴滴博主我</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LYJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

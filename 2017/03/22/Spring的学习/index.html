@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Srping -零散的重要知识点,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="新知识的领悟">
+<meta name="keywords" content="-Srping -零散的重要知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring的学习 ">
+<meta property="og:url" content="http://yoursite.com/2017/03/22/Spring的学习/index.html">
+<meta property="og:site_name" content="LYJ博客">
+<meta property="og:description" content="新知识的领悟">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-03-22T13:32:02.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring的学习 ">
+<meta name="twitter:description" content="新知识的领悟">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/22/Spring的学习/">
+
+
+
+
+
+  <title>Spring的学习  | LYJ博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LYJ博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个人的故事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/Spring的学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LYJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYJ博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring的学习 </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T18:37:51+08:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="新知识的领悟"><a href="#新知识的领悟" class="headerlink" title="新知识的领悟"></a>新知识的领悟</h2><a id="more"></a>
+<blockquote>
+<p>由于贪玩太久没有发布博客了，好多知识都快忘了.<br>从今天开始每天都做个笔记记录自己的每一天<br>争取每天学一点知识。</p>
+</blockquote>
+<h2 id="1-1编写流程-基于xml"><a href="#1-1编写流程-基于xml" class="headerlink" title="1.1编写流程(基于xml)"></a>1.1编写流程(基于xml)</h2><blockquote>
+<p>2.编写目标类：dao和service<br>3.spring配置文件<br>IoC：<bean id class><br>DI：<bean> <property name value | ref><br>实例化方式：<br>默认构造<br>静态工厂：<bean id class="工厂类" factory-method="静态方法"><br>实例工厂：<bean id="工厂id" class="工厂类">  <bean id factory-bean="工厂id" factory-method="方法"><br>作用域：<bean id class scope="singleton | prototype"><br>生命周期：<bean id class init-method destroy-method><br>后处理bean  BeanPostProcessor接口，<bean class="注册"> ，对容器中所有的bean都生效<br>属性注入<br>构造方法注入：<bean><constructor-arg index type><br>setter方法注入：<bean><property><br>p命名空间：简化<property>   <bean p:属性名="普通值" p:属性名-ref="引用值">  注意声明命名空间<br>SpEL：<property name value="#{表达式}"></property></bean></property></property></bean></constructor-arg></bean></bean></bean></bean></bean></bean></bean></property></bean></bean></p>
+<pre><code>   #{123}  #{&apos;abc&apos;}
+   #{beanId.propName?.methodName()}
+   #{T(类).静态方法|字段}
+集合
+   数组&lt;array&gt;
+   List &lt;list&gt;
+   Set &lt;set&gt;
+   Map &lt;map&gt;&lt;entry key=&quot;&quot; value=&quot;&quot;&gt;
+   Properties &lt;props&gt;&lt;prop key=&quot;&quot;&gt;....
+</code></pre></blockquote>
+<h2 id="IoC："><a href="#IoC：" class="headerlink" title="IoC："></a>IoC：</h2><blockquote>
+<p>4.核心api<br>    BeanFactory，延迟实例化bean，第一次调用getBean<br>    ApplicationContext 一般常用，功能更强<br>        ClassPathXmlApplicationContext 加载classpath xml文件<br>        FileSystemXmlApplicationContext 加载指定盘符文件 ， ServletContext.getRealPath()</p>
+</blockquote>
+<h2 id="1-3注解"><a href="#1-3注解" class="headerlink" title="1.3注解"></a>1.3注解</h2><blockquote>
+<p>1.扫描含有注解的类<br>    <context:component-scan base-package="...."><br>2.常见的注解<br>        @Component  组件，任意bean<br>        WEB<br>            @Controller  web层<br>            @Service service层<br>            @Repository dao层<br>        注入  –&gt; 字段或setter方法<br>            普通值：@Value<br>            引用值：<br>                类型：@Autowired<br>                名称1：@Autowired  @Qualifier(“名称”)<br>                名称2：@Resource(“名称”)<br>        作用域：@Scope(“prototype”)<br>        生命周期：<br>            初始化：@PostConstruct<br>            销毁方法：@PreDestroy</context:component-scan></p>
+</blockquote>
+<h2 id="1-4注解和xml混合使用"><a href="#1-4注解和xml混合使用" class="headerlink" title="1.4注解和xml混合使用"></a>1.4注解和xml混合使用</h2><blockquote>
+<p>1.将所有的bean都配置xml中<br>    <bean id class><br>2.将所有的依赖都使用注解<br>    @Autowired<br>    默认不生效。为了生效，需要在xml配置：<context:annotation-config></context:annotation-config></bean></p>
+</blockquote>
+<ul>
+<li>总结：<blockquote>
+<p>注解1：<context:component-scan base-package=" "><br>注解2：<context:annotation-config><br>1.一般情况两个注解不一起使用。</context:annotation-config></context:component-scan></p>
+<ol>
+<li>“注解1”扫描含有注解（@Component 等）类，注入注解自动生效。<br>“注解2”只在xml和注解（注入）混合使用时，使注入注解生效。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2 AOP"></a>2 AOP</h2><ul>
+<li>2.1AOP介绍</li>
+<li>2.1.1什么是AOP<blockquote>
+<p>在软件业，AOP为Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP（面向对象编程）的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。<br>AOP采取横向抽取机制，取代了传统纵向继承体系重复性代码<br>经典应用：事务管理、性能监视、安全检查、缓存 、日志等<br>Spring AOP使用纯Java实现，不需要专门的编译过程和类加载器，在运行期通过代理方式向目标类织入增强代码<br>AspectJ是一个基于Java语言的AOP框架，Spring2.0开始，Spring AOP引入对Aspect的支持，AspectJ扩展了Java语言，提供了一个专门的编译器，在编译时提供横向代码的织入</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-1-2AOP实现原理"><a href="#2-1-2AOP实现原理" class="headerlink" title="2.1.2AOP实现原理"></a>2.1.2AOP实现原理</h2><p>aop底层将采用代理机制进行实现。<br>接口 + 实现类 ：spring采用 jdk 的动态代理Proxy。<br>实现类：spring 采用 cglib字节码增强。</p>
+<h2 id="2-1-3AOP术语【掌握】"><a href="#2-1-3AOP术语【掌握】" class="headerlink" title="2.1.3AOP术语【掌握】"></a>2.1.3AOP术语【掌握】</h2><ul>
+<li>1.target：目标类，需要被代理的类。例如：UserService</li>
+<li>2.Joinpoint(连接点):所谓连接点是指那些可能被拦截到的方法。例如：所有的方法</li>
+<li>3.PointCut 切入点：已经被增强的连接点。例如：addUser()</li>
+<li>4.advice 通知/增强，增强代码。例如：after、before</li>
+<li><ol>
+<li>Weaving(织入):是指把增强advice应用到目标对象target来创建新的代理对象proxy的过程.</li>
+</ol>
+</li>
+<li>6.proxy 代理类</li>
+<li><ol>
+<li>Aspect(切面): 是切入点pointcut和通知advice的结合<br>一个线是一个特殊的面。<br>一个切入点和一个通知，组成成一个特殊的面。</li>
+</ol>
+</li>
+</ul>
+<h2 id="2-2手动方式"><a href="#2-2手动方式" class="headerlink" title="2.2手动方式"></a>2.2手动方式</h2><blockquote>
+<p>2.2.1JDK动态代理<br>JDK动态代理 对“装饰者”设计模式 简化。使用前提：必须有接口</p>
+<ul>
+<li>1.目标类：接口 + 实现类</li>
+<li>2.切面类：用于存通知 MyAspect</li>
+<li>3.工厂类：编写工厂生成代理</li>
+<li>4.测试</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>2.2.1.1目标类</p>
+<pre><code>public interface UserService {
+    public void addUser();
+    public void updateUser();
+    public void deleteUser();
+}
+</code></pre></li>
+<li><p>2.2.1.2切面类</p>
+<pre><code>public class MyAspect {
+    public void before(){
+        System.out.println(&quot;鸡首&quot;);
+        }    
+    public void after(){
+        System.out.println(&quot;牛后&quot;);
+    }
+}
+</code></pre></li>
+</ul>
+<ul>
+<li><p>2.2.1.3工厂</p>
+<pre><code>public class MyBeanFactory {
+
+    public static UserService createService(){
+        //1 目标类
+        final UserService userService = new UserServiceImpl();
+        //2切面类
+        final MyAspect myAspect = new MyAspect();
+        /* 3 代理类：将目标类（切入点）和 切面类（通知） 结合 --&gt; 切面
+         *     Proxy.newProxyInstance
+         *         参数1：loader ，类加载器，动态代理类 运行时创建，任何类都需要类加载器将其加载到内存。
+         *             一般情况：当前类.class.getClassLoader();
+         *                     目标类实例.getClass().get...
+         *         参数2：Class[] interfaces 代理类需要实现的所有接口
+         *             方式1：目标类实例.getClass().getInterfaces()  ;注意：只能获得自己接口，不能获得父元素接口
+         *             方式2：new Class[]{UserService.class}   
+         *             例如：jdbc 驱动  --&gt; DriverManager  获得接口 Connection
+         *         参数3：InvocationHandler  处理类，接口，必须进行实现类，一般采用匿名内部
+         *             提供 invoke 方法，代理类的每一个方法执行时，都将调用一次invoke
+         *                 参数31：Object proxy ：代理对象
+         *                 参数32：Method method : 代理对象当前执行的方法的描述对象（反射）
+         *                     执行方法名：method.getName()
+         *                     执行方法：method.invoke(对象，实际参数)
+         *                 参数33：Object[] args :方法实际参数
+         * 
+         */
+        UserService proxService = (UserService)Proxy.newProxyInstance(
+                                MyBeanFactory.class.getClassLoader(), 
+                                userService.getClass().getInterfaces(), 
+                                new InvocationHandler() {
+
+                                    @Override
+                                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+                                        //前执行
+                                        myAspect.before();
+
+                                        //执行目标类的方法
+                                        Object obj = method.invoke(userService, args);
+
+                                        //后执行
+                                        myAspect.after();
+
+                                        return obj;
+                                    }
+                                });
+
+        return proxService;
+    }
+
+}
+</code></pre></li>
+</ul>
+<ul>
+<li>2.2.1.4测试<pre><code>@Test
+public void demo01(){
+    serService userService = MyBeanFactory.createService();
+    userService.addUser();
+    userService.updateUser();
+    userService.deleteUser();
+}
+</code></pre></li>
+</ul>
+<h2 id="2-3AOP联盟通知类型"><a href="#2-3AOP联盟通知类型" class="headerlink" title="2.3AOP联盟通知类型"></a>2.3AOP联盟通知类型</h2><blockquote>
+<p>AOP联盟为通知Advice定义了org.aopalliance.aop.Advice<br>Spring按照通知Advice在目标类方法的连接点位置，可以分为5类</p>
+<ul>
+<li>前置通知 org.springframework.aop.MethodBeforeAdvice</li>
+<li>在目标方法执行前实施增强</li>
+<li>后置通知 org.springframework.aop.AfterReturningAdvice</li>
+<li>在目标方法执行后实施增强</li>
+<li>环绕通知 org.aopalliance.intercept.MethodInterceptor</li>
+<li>在目标方法执行前后实施增强</li>
+<li>异常抛出通知 org.springframework.aop.ThrowsAdvice</li>
+<li>在方法抛出异常后实施增强</li>
+<li>引介通知 org.springframework.aop.IntroductionInterceptor</li>
+<li>在目标类中添加一些新的方法和属性</li>
+</ul>
+</blockquote>
+<pre><code>环绕通知，必须手动执行目标方法
+try{
+   //前置通知
+   //执行目标方法
+   //后置通知
+} catch(){
+   //抛出异常通知
+}
+</code></pre><h2 id="3AspectJ"><a href="#3AspectJ" class="headerlink" title="3AspectJ"></a>3AspectJ</h2><ul>
+<li><p>3.1介绍</p>
+<blockquote>
+<p>AspectJ是一个基于Java语言的AOP框架<br>Spring2.0以后新增了对AspectJ切点表达式支持<br>@AspectJ 是AspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面<br>新版本Spring框架，建议使用AspectJ方式来开发AOP<br>主要用途：自定义开发</p>
+</blockquote>
+</li>
+<li><p>3.2切入点表达式【掌握】</p>
+<pre><code>1.execution()  用于描述方法 【掌握】
+语法：execution(修饰符  返回值  包.类.方法名(参数) throws异常)
+修饰符，一般省略
+public        公共方法
+*            任意
+返回值，不能省略
+void            返回没有值
+String        返回值字符串
+*             任意
+包，[省略]
+com.itheima.crm            固定包
+com.itheima.crm.*.service    crm包下面子包任意 （例如：com.itheima.crm.staff.service）
+com.itheima.crm..            crm包下面的所有子包（含自己）
+com.itheima.crm.*.service..    crm包下面任意子包，固定目录service，service目录任意包
+类，[省略]
+UserServiceImpl            指定类
+*Impl                    以Impl结尾
+User*                    以User开头
+*                        任意
+方法名，不能省略
+addUser                    固定方法
+add*                        以add开头
+*Do                        以Do结尾
+*                        任意
+(参数)
+()                        无参
+(int)                        一个整型
+(int ,int)                    两个
+(..)                        参数任意
+throws ,可省略，一般不写。
+</code></pre></li>
+<li><p>综合1<br>  execution(<em> com.itheima.crm.</em>.service..<em>.</em>(..))</p>
+</li>
+<li>综合2  <aop:pointcut expression="execution(* com.itheima.*WithCommit.*(..)) || 
+                        execution(* com.itheima.*Service.*(..))" id="myPointCut"></aop:pointcut></li>
+<li>2.within:匹配包或子包中的方法(了解)<br>  within(com.itheima.aop..*)</li>
+<li>3.this:匹配实现接口的代理对象中的方法(了解)<br>  this(com.itheima.aop.user.UserDAO)</li>
+<li>4.target:匹配实现接口的目标对象中的方法(了解)<br>  target(com.itheima.aop.user.UserDAO)</li>
+<li>5.args:匹配参数格式符合标准的方法(了解)<br>  args(int,int)</li>
+<li>6.bean(id)  对指定的bean所有的方法(了解)<br>  bean(‘userServiceId’)</li>
+</ul>
+<h3 id="3-3AspectJ-通知类型"><a href="#3-3AspectJ-通知类型" class="headerlink" title="3.3AspectJ 通知类型"></a>3.3AspectJ 通知类型</h3><blockquote>
+<p>aop联盟定义通知类型，具有特性接口，必须实现，从而确定方法名称。<br>aspectj 通知类型，只定义类型名称。已经方法格式。<br>个数：6种，知道5种，掌握1中。</p>
+<ul>
+<li>before:前置通知(应用：各种校验)<br>  在方法执行前执行，如果通知抛出异常，阻止方法运行</li>
+<li>afterReturning:后置通知(应用：常规数据处理)<br>  方法正常返回后执行，如果方法中抛出异常，通知无法执行<br>  必须在方法执行后才执行，所以可以获得方法的返回值。</li>
+<li>around:环绕通知(应用：十分强大，可以做任何事情)<br>  方法执行前后分别执行，可以阻止方法的执行<br>  必须手动执行目标方法</li>
+<li>afterThrowing:抛出异常通知(应用：包装异常信息)<br>  方法抛出异常后执行，如果方法没有抛出异常，无法执行</li>
+<li>after:最终通知(应用：清理现场)<br>  方法执行完毕后执行，无论方法中是否出现异常<br>  环绕</li>
+</ul>
+</blockquote>
+<pre><code>try{
+     //前置：before
+    //手动执行目标方法
+    //后置：afterRetruning
+} catch(){
+    //抛出异常 afterThrowing
+} finally{
+    //最终 after
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Srping-零散的重要知识点/" rel="tag"># -Srping -零散的重要知识点</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/11/hibernate的常见错误/" rel="next" title="hibernate的常见错误 ">
+                <i class="fa fa-chevron-left"></i> hibernate的常见错误 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/24/action中常见错误/" rel="prev" title="action中常见错误">
+                action中常见错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LYJ</p>
+              <p class="site-description motion-element" itemprop="description">一个人的故事</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新知识的领悟"><span class="nav-number">1.</span> <span class="nav-text">新知识的领悟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1编写流程-基于xml"><span class="nav-number">2.</span> <span class="nav-text">1.1编写流程(基于xml)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC："><span class="nav-number">3.</span> <span class="nav-text">IoC：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3注解"><span class="nav-number">4.</span> <span class="nav-text">1.3注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4注解和xml混合使用"><span class="nav-number">5.</span> <span class="nav-text">1.4注解和xml混合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-AOP"><span class="nav-number">6.</span> <span class="nav-text">2 AOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-2AOP实现原理"><span class="nav-number">7.</span> <span class="nav-text">2.1.2AOP实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-3AOP术语【掌握】"><span class="nav-number">8.</span> <span class="nav-text">2.1.3AOP术语【掌握】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2手动方式"><span class="nav-number">9.</span> <span class="nav-text">2.2手动方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3AOP联盟通知类型"><span class="nav-number">10.</span> <span class="nav-text">2.3AOP联盟通知类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3AspectJ"><span class="nav-number">11.</span> <span class="nav-text">3AspectJ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3AspectJ-通知类型"><span class="nav-number">11.1.</span> <span class="nav-text">3.3AspectJ 通知类型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LYJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaweb笔记,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端代码">
+<meta name="keywords" content="javaweb笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ajax+Servlet实现智能搜索框">
+<meta property="og:url" content="http://yoursite.com/2017/02/21/Ajax-Servlet实现智能搜索框/index.html">
+<meta property="og:site_name" content="LYJ博客">
+<meta property="og:description" content="前端代码">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/20170221212716.png">
+<meta property="og:image" content="http://yoursite.com/images/20170221212716.png">
+<meta property="og:image" content="http://yoursite.com/images/20170221212745.png">
+<meta property="og:image" content="http://yoursite.com/images/20170221212602.png">
+<meta property="og:image" content="http://yoursite.com/images/20170221212524.png">
+<meta property="og:updated_time" content="2017-03-31T00:51:42.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ajax+Servlet实现智能搜索框">
+<meta name="twitter:description" content="前端代码">
+<meta name="twitter:image" content="http://yoursite.com/images/20170221212716.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/21/Ajax-Servlet实现智能搜索框/">
+
+
+
+
+
+  <title>Ajax+Servlet实现智能搜索框 | LYJ博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LYJ博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个人的故事</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/21/Ajax-Servlet实现智能搜索框/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LYJ">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYJ博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ajax+Servlet实现智能搜索框</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-21T21:35:02+08:00">
+                2017-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前端代码"><a href="#前端代码" class="headerlink" title="前端代码"></a>前端代码</h2><a id="more"></a>
+<pre><code>&lt;%-- &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+&lt;title&gt;AjaxTest&lt;/title&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+    #mydiv{
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-left: -250px;
+        margin-top: -150px;
+    }
+
+        .mouseOver{
+        background: #708090;
+        color:#FFFAFA;
+    }
+    .mouseOut{
+        background: #FFFAFA;
+        color:#000;
+    }
+&lt;/style&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    var xmlHttp;
+
+    //1.获得用户输入内容的关联信息的函数
+    function getMoreContents(){
+        //首先获得用户输入
+        var content=document.getElementById(&quot;keyword&quot;)
+        if(content.value==&quot;&quot;){
+            //当输入框为空时，清空之前的数据
+            clearContent();
+            return;
+        }
+        //2.然后要给服务器发送用户输入的内容,因为我们采用的是ajax异步发送数据，所以我们要使用xmlHttp对象
+        xmlHttp=createXMLHttp();
+        //alert(xmlHttp);
+        //3.要给服务器发送数据,首先定义一个服务器的地址，
+        var url=&quot;serach?keyword=&quot;+escape(content.value);
+        //true表示JavaScript脚本会在send()方法之后继续执行，而不会等待来自服务器的响应。
+        xmlHttp.open(&quot;GET&quot;,url,true);
+
+        //xmlHttp绑定回调方法，这个回调方法会在xmlHttp状态改变的时候会被调用
+    //xmlHttp的状态：0-4，我们只关心4(complete)这个状态，所以说当完成之后，再调用回调函数才有意义。
+        xmlHttp.onreadystatechange = callback;
+        //参数已经在url中了，不用在此处添加参数
+        xmlHttp.send(null);
+    }
+
+    //获得XmlHttp对象
+    function createXMLHttp(){
+
+        //对大多数浏览器都适用
+        var xmlHttp;
+        if(window.XMLHttpRequest){
+            xmlHttp=new XMLHttpRequest();
+        }
+        //要考虑浏览器的兼容性
+        if(window.ActiveXObject){
+            xmlHttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+            //如果浏览器没有xmlHttp时
+            if(!xmlHttp){
+                xmlHttp=new ActiveXObject(&quot;Msxml2.XMLHTTP&quot;);
+            }
+        }
+        return xmlHttp;
+    }
+
+    //回调函数
+    function callback(){
+        //4代表完成
+        if(xmlHttp.readyState==4){
+            //200代表服务器响应成功，404代表资源未找到，500代表服务器内部错误
+            if(xmlHttp.status==200){
+                //交互成功，获得相应的数据，是文本格式。
+                var result=xmlHttp.responseText;
+                //解析获得数据
+                var json=eval(&quot;(&quot;+result+&quot;)&quot;);
+                //获得这些数据之后，就可以动态的显示数据了。把这些数据展示到输入框下面。
+                //alert(json);
+                setContent(json);
+            }
+        }
+    }
+
+    //设置关联数据的展示，参数代表服务器传递过来的关联数据
+    function setContent(contents){
+
+        //清空之前的数据
+        clearContent();
+        //设置位置
+        setLocation();
+        //首先获得关联数据的长度，以此来确定生成多少个&lt;tr&gt;&lt;/tr&gt;
+        var size=contents.length;
+        //设置内容
+        for(var i=0;i&lt;size;i++){
+            var nextNode=contents[i];//代表json数据的第i个元素
+            var tr=document.createElement(&quot;tr&quot;);
+            var td=document.createElement(&quot;td&quot;);
+            td.setAttribute(&quot;border&quot;, &quot;0&quot;);
+            td.setAttribute(&quot;bgcolor&quot;, &quot;#FFFAFA&quot;);
+            //为td绑定两个样式（鼠标进入和鼠标移出时事件）
+            td.onmouseover=function(){
+                this.className=&apos;mouseOver&apos;;
+            }; 
+            td.onmouseout=function(){
+                this.className=&quot;mouseOut&quot;;
+            };
+
+            /* td.onclick = function(){
+                //这个方法实现的是，当用鼠标点击一个关联数据时，关联数据自动填充到输入框中。
+                document.getElementById(&quot;keyword&quot;).value =this.innerText;
+            }; */
+             td.onmousedown = function(){
+        //当鼠标点击一个关联数据时，自动在输入框添加数据
+        document.getElementById(&quot;keyword&quot;).value =this.innerText;
+       };
+
+     //鼠标悬浮于关联数据上时，自动添加到输入框中
+            /*  td.onmouseover = function(){
+             this.className = &apos;mouseOver&apos;;
+             if(td.innerText != null)
+             document.getElementById(&quot;keyword&quot;).value =this.innerText;
+
+            }  */
+
+            //创建一个文本节点
+            var text=document.createTextNode(nextNode);
+            td.appendChild(text);
+            tr.appendChild(td);
+            document.getElementById(&quot;content_table_body&quot;).appendChild(tr);
+        }
+    }
+
+    //清空之前的数据
+    function clearContent(){
+
+        var contentTableBody=document.getElementById(&quot;content_table_body&quot;);
+        var size=contentTableBody.childNodes.length;
+        //删除时，从下往上删
+        for(var i=size-1;i&gt;=0;i--){
+            //指定删除第i个子节点
+            contentTableBody.removeChild(contentTableBody.childNodes[i]);
+        }
+        //清除关联数据的外边框
+        document.getElementById(&quot;popDiv&quot;).style.border=&quot;none&quot;;
+    }
+
+    //当输入框失去焦点的时候，输入框的关联信息清空
+    function keywordBlur(){
+        clearContent();
+    }
+    //设置显示关联信息的位置
+    function setLocation(){
+        //关联信息的显示位置要和输入框一致
+        var content=document.getElementById(&quot;keyword&quot;);
+        var width=content.offsetWidth;//输入框的长度
+        var left=content[&quot;offsetLeft&quot;];//到左边框的距离
+        var top=content[&quot;offsetTop&quot;]+content.offsetHeight;//到顶部的距离(加上输入框本身的高度)
+        //获得显示数据的div
+        var popDiv=document.getElementById(&quot;popDiv&quot;);
+        popDiv.style.booder=&quot;black 1px solid&quot;;
+        popDiv.style.left=left+&quot;px&quot;;
+        popDiv.style.top=top+&quot;px&quot;;
+        popDiv.style.width=width+&quot;px&quot;;
+
+        document.getElementById(&quot;content_table&quot;).style.width=width+&quot;px&quot;;
+    }
+&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;mydiv&quot;&gt;
+        &lt;!-- 输入框 --&gt;
+        &lt;input type=&quot;text&quot; size=&quot;50&quot; id=&quot;keyword&quot; onkeyup=&quot;getMoreContents()&quot;
+        onblur=&quot;keywordBlur()&quot; onfocus=&quot;getMoreContents()&quot;/&gt;
+        &lt;input type=&quot;button&quot; value=&quot;百度一下&quot; width=&quot;50%&quot;/&gt;
+
+        &lt;!-- 下面是内容展示的区域 --&gt;
+        &lt;div id=&quot;popDiv&quot;&gt;
+            &lt;table id=&quot;content_table&quot; bgcolor=&quot;#FFFAFA&quot; border=&quot;0&quot;  &gt;
+                &lt;tbody id=&quot;content_table_body&quot;&gt;
+                    &lt;!-- 动态查询出来的数据 --&gt;
+
+
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt; --%&gt;
+</code></pre><h2 id="后端代码"><a href="#后端代码" class="headerlink" title="后端代码"></a>后端代码</h2><pre><code>/*package com.java;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+*//**
+ * 
+ * @author 李先森 --2017.2.21
+ *
+ *//*
+public class SerachServlet extends HttpServlet {
+
+    *//**
+     * 
+     *//*
+    private static final long serialVersionUID = 1L;
+    //定义一个容器,存放模拟数据
+    static List&lt;String&gt; datas = new ArrayList&lt;String&gt;();
+    static{
+        datas.add(&quot;ajax&quot;);
+        datas.add(&quot;ajax提交form表单&quot;);
+        datas.add(&quot;ajax教程&quot;);
+        datas.add(&quot;baidu&quot;);
+        datas.add(&quot;bt&quot;);
+        datas.add(&quot;byte&quot;);
+        datas.add(&quot;jstl&quot;);
+        datas.add(&quot;jstsl&quot;);
+        datas.add(&quot;jsatl&quot;);
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        this.doPost(request, response);
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        //设置字符编码格式
+        request.setCharacterEncoding(&quot;utf-8&quot;);
+        response.setCharacterEncoding(&quot;utf-8&quot;);
+        //首先获得客户端发送来的数据(keyword)
+        String keyword = request.getParameter(&quot;keyword&quot;);
+        //获得关键字之后进行处理，得到关联数据
+        List&lt;String&gt; listData = getData(keyword);
+
+//        System.out.println(JSONArray.fromObject(listData));
+//        JSONArray.fromObject(listData);
+        //返回json格式
+        response.getWriter().write(JSONArray.fromObject(listData).toString());
+    }
+
+    //获得关联数据的方法
+    public List&lt;String&gt; getData(String keyword){
+        List&lt;String&gt; list = new ArrayList&lt;String&gt;();
+        for (String data : datas) {
+            if(data.contains(keyword)){
+                list.add(data);
+            }
+        }
+        return list;
+    }
+
+}
+*/
+</code></pre><h2 id="页面和项目截图"><a href="#页面和项目截图" class="headerlink" title="页面和项目截图"></a>页面和项目截图</h2><p><img src="/images/20170221212716.png" alt></p>
+<p><img src="/images/20170221212716.png" alt></p>
+<p><img src="/images/20170221212745.png" alt></p>
+<p><img src="/images/20170221212602.png" alt></p>
+<p><img src="/images/20170221212524.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaweb笔记/" rel="tag"># javaweb笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/安卓第一课/" rel="next" title="安卓第一课">
+                <i class="fa fa-chevron-left"></i> 安卓第一课
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/24/安卓第二课/" rel="prev" title="安卓第二课">
+                安卓第二课 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LYJ</p>
+              <p class="site-description motion-element" itemprop="description">一个人的故事</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端代码"><span class="nav-number">1.</span> <span class="nav-text">前端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后端代码"><span class="nav-number">2.</span> <span class="nav-text">后端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面和项目截图"><span class="nav-number">3.</span> <span class="nav-text">页面和项目截图</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LYJ</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
